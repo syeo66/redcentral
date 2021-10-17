@@ -1,5 +1,5 @@
 <script>
-  import RedCentral from "./RedCentral.svelte";
+  import RedCentral from './RedCentral.svelte';
 </script>
 
 <div>
@@ -14,7 +14,7 @@
       display: grid;
       grid-template-columns: 16rem 1fr;
       grid-template-rows: 5rem 1fr;
-      grid-template-areas: "header main" "nav main";
+      grid-template-areas: 'header main' 'nav main';
       height: 100%;
     }
   }
