@@ -3,7 +3,7 @@
 </script>
 
 <div>
-  <header><RedCentral /></header>
+  <header><a href="/"><RedCentral /></a></header>
   <nav>Navigation</nav>
   <main>Main</main>
 </div>
@@ -17,6 +17,11 @@
       grid-template-areas: 'header main' 'nav main';
       height: 100%;
     }
+
+    > * {
+      border-bottom: 1px solid #000;
+      border-top: 1px solid #666;
+    }
   }
 
   header {
@@ -24,10 +29,14 @@
     align-items: center;
     justify-content: center;
 
-    border-bottom: 1px solid #000;
     background: #333;
 
     padding: 1rem;
+    border-top: 0 transparent none;
+
+    a {
+      color: #fff;
+    }
 
     @media screen and (min-width: 800px) {
       grid-area: header;
@@ -37,17 +46,18 @@
   main {
     background: #444;
 
-    @media screen and (min-width: 800px) {
+    @media screen and (min-width:  800px) {
+      border: 0 transparent none;
       grid-area: main;
     }
   }
 
   nav {
-    border-top: 1px solid #666;
     background: #333;
     padding: 1rem;
 
     @media screen and (min-width: 800px) {
+      border-bottom: 0 transparent none;
       grid-area: nav;
     }
   }
