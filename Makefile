@@ -6,7 +6,7 @@ help:
 
 build: node_modules src
 	yarn build
-	touch src/js
+	touch public/build
 
 start: node_modules
 	yarn dev
