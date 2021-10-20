@@ -1,4 +1,8 @@
-<main>Main</main>
+<script>
+  import WidgetGrid from './WidgetGrid.svelte';
+</script>
+
+<main><WidgetGrid /></main>
 
 <style lang="scss">
   main {
