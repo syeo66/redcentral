@@ -2,7 +2,7 @@
   export let colspan = 1;
 </script>
 
-<div class={`colspan-${colspan}`} />
+<div class={`colspan-${colspan}`} ><slot /></div>
 
 <style lang="scss">
   div {

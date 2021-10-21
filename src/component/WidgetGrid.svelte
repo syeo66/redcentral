@@ -1,17 +1,11 @@
-<script>
+<script lang="ts">
   import Widget from './Widget.svelte';
+  import BTCChart from './widgets/BTCChart.svelte'
 </script>
 
 <div>
-  <Widget colspan={2} />
-  <Widget />
-  <Widget />
-  <Widget />
-  <Widget colspan={3} />
-  <Widget colspan={4} />
-  <Widget />
-  <Widget colspan={2} />
-  <Widget />
+  <Widget colspan={3} ><BTCChart /></Widget>
+  <Widget/>
 </div>
 
 <style lang="scss">
@@ -20,6 +14,9 @@
       display: grid;
       grid-template-columns: 1fr 1fr 1fr 1fr;
       gap: 0.5rem;
+      overflow: auto;
+      max-height: 100%;
+      grid-auto-flow: dense;
     }
   }
 </style>
