@@ -28,7 +28,7 @@
 <style lang="scss">
   .prev-next {
     position: absolute;
-    color: rgba(0, 0, 0, 0.3);
+    color: rgba(0, 0, 0, 0.5);
     width: 2em;
     height: 1em;
     display: flex;
@@ -37,7 +37,6 @@
     right: 0.2rem;
     font-size: 25px;
     align-items: flex-start;
-    text-shadow: rgba(255, 255, 255, 0.05);
 
     .active {
       color: black;
@@ -45,6 +44,9 @@
 
     > div {
       cursor: pointer;
+      text-shadow: 0 0 1px rgba(255, 255, 255, 0.7), 0 0 10px rgba(255, 255, 255, 0.5),
+        0 0 20px rgba(255, 255, 255, 0.4);
+
       &:hover {
         color: #666;
       }
