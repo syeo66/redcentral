@@ -1,11 +1,11 @@
 <script lang="ts">
   import Widget from './Widget.svelte';
-  import BTCChart from './widgets/BTCChart.svelte'
+  import CryptoCharts from './widgets/CryptoCharts.svelte';
 </script>
 
 <div>
-  <Widget colspan={3} ><BTCChart /></Widget>
-  <Widget/>
+  <Widget colspan={3}><CryptoCharts /></Widget>
+  <Widget />
 </div>
 
 <style lang="scss">

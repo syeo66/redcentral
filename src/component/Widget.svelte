@@ -2,7 +2,7 @@
   export let colspan = 1;
 </script>
 
-<div class={`colspan-${colspan}`} ><slot /></div>
+<div class={`colspan-${colspan}`}><slot /></div>
 
 <style lang="scss">
   div {
@@ -17,6 +17,7 @@
     border-radius: 0.5rem;
     min-height: 3rem;
     background-color: rgba(0, 0, 0, 0.5);
+    position: relative;
 
     @media screen and (min-width: 800px) {
       margin-bottom: 0;
