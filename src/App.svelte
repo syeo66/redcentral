@@ -1,13 +1,25 @@
 <script lang="ts">
+  import type { User } from 'firebase/auth';
+
   import Header from './component/Header.svelte';
+  import Login from './component/Login.svelte';
   import Main from './component/Main.svelte';
   import Navigation from './component/Navigation.svelte';
+  import { auth } from './firebase';
+
+  let user: User;
+
+  auth.onAuthStateChanged((u) => (user = u));
 </script>
 
 <div>
   <Header />
-  <Navigation />
-  <Main />
+  {#if !user}
+    <Login />
+  {:else}
+    <Navigation />
+    <Main />
+  {/if}
 </div>
 
 <style lang="scss">
