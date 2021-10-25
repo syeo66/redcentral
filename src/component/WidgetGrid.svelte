@@ -4,7 +4,13 @@
 </script>
 
 <div>
-  <Widget colspan={3}><CryptoCharts /></Widget>
+  <Widget colspan={3} rowspan={4}><CryptoCharts /></Widget>
+  <Widget rowspan={2} />
+  <Widget />
+  <Widget />
+  <Widget />
+  <Widget />
+  <Widget />
   <Widget />
 </div>
 

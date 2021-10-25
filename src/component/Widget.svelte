@@ -1,8 +1,9 @@
 <script lang="ts">
   export let colspan = 1;
+  export let rowspan = 1;
 </script>
 
-<div class={`colspan-${colspan}`}><slot /></div>
+<div class={`colspan-${colspan} rowspan-${rowspan}`}><slot /></div>
 
 <style lang="scss">
   div {
@@ -36,6 +37,22 @@
 
       &.colspan-4 {
         grid-column: span 4;
+      }
+
+      &.rowspan-1 {
+        grid-row: span 1;
+      }
+
+      &.rowspan-2 {
+        grid-row: span 2;
+      }
+
+      &.rowspan-3 {
+        grid-row: span 3;
+      }
+
+      &.rowspan-4 {
+        grid-row: span 4;
       }
     }
   }
