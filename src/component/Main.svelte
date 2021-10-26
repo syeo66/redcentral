@@ -1,5 +1,9 @@
-<script>
+<script lang="ts">
+  import type { User } from 'firebase/auth';
+
   import WidgetGrid from './WidgetGrid.svelte';
+
+  export let user: User;
 </script>
 
 <main><WidgetGrid /></main>

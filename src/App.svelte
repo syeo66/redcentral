@@ -14,11 +14,11 @@
 
 <div>
   <Header />
+  <Navigation {user} />
   {#if !user}
     <Login />
   {:else}
-    <Navigation />
-    <Main />
+    <Main {user} />
   {/if}
 </div>
 

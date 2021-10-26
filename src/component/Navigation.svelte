@@ -1,7 +1,28 @@
-<nav><a href="/" class="active">Home</a></nav>
+<script lang="ts">
+  import { signOut, User } from 'firebase/auth';
+
+  import Button from './Button.svelte';
+  import { auth } from '../firebase';
+
+  export let user: User;
+
+  const handleLogout = () => {
+    signOut(auth);
+  };
+</script>
+
+<nav>
+  {#if user}
+    <a href="/" class="active">Home</a>
+    <Button on:click={handleLogout}>Logout</Button>
+  {/if}
+</nav>
 
 <style lang="scss">
   nav {
+    display: flex;
+    flex-direction: column;
+
     background: #333;
     padding: 1rem;
     border-bottom: 1px solid #000;
@@ -19,6 +40,8 @@
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
       text-decoration: none;
       transition: background-color 250ms, box-shadow 250ms;
+      cursor: pointer;
+      margin-bottom: 0.3rem;
 
       &.active {
         background-color: #333;
