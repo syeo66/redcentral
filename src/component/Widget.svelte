@@ -3,6 +3,7 @@
 
   import CryptoCharts from './widgets/CryptoCharts.svelte';
   import Debugger from './widgets/Debugger.svelte';
+  import HtmlContent from './widgets/HtmlContent.svelte';
 
   let component: any = Debugger;
 
@@ -11,6 +12,11 @@
   switch (panel.component) {
     case 'CryptoCharts':
       component = CryptoCharts;
+      break;
+
+    case 'HtmlContent':
+      component = HtmlContent;
+      break;
   }
 </script>
 

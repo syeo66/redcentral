@@ -25,7 +25,9 @@
 </script>
 
 <div>
-  <PrevNext max={images.length} bind:count={pointer} />
+  {#if images.length > 1}
+    <PrevNext max={images.length} bind:count={pointer} />
+  {/if}
   {#if isLoaded[pointer]}
     <img alt={currentChart.alt} src={currentChart.src} />
   {:else}
