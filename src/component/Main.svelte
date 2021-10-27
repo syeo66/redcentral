@@ -6,7 +6,7 @@
   export let user: User;
 </script>
 
-<main><WidgetGrid /></main>
+<main><WidgetGrid {user} /></main>
 
 <style lang="scss">
   main {

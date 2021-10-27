@@ -36,15 +36,16 @@
 <style lang="scss">
   div,
   img {
-    width: 100%;
-    height: 100%;
-    aspect-ratio: 1.619;
     border-radius: 0.5rem;
+  }
+  img {
+    width: 100%;
   }
 
   div {
     display: flex;
     justify-content: center;
     align-items: center;
+    object-fit: cover;
   }
 </style>

@@ -1,9 +1,22 @@
 <script lang="ts">
-  export let colspan = 1;
-  export let rowspan = 1;
+  import type { Panel } from '../types';
+
+  import CryptoCharts from './widgets/CryptoCharts.svelte';
+  import Debugger from './widgets/Debugger.svelte';
+
+  let component: any = Debugger;
+
+  export let panel: Panel;
+
+  switch (panel.component) {
+    case 'CryptoCharts':
+      component = CryptoCharts;
+  }
 </script>
 
-<div class={`colspan-${colspan} rowspan-${rowspan}`}><slot /></div>
+<div class={`colspan-${panel.size.columns} rowspan-${panel.size.rows}`}>
+  <svelte:component this={component} {panel} />
+</div>
 
 <style lang="scss">
   div {
