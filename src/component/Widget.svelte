@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { Panel } from '../types';
+  import BitcoinPrice from './widgets/BitcoinPrice.svelte';
 
   import CryptoCharts from './widgets/CryptoCharts.svelte';
   import Debugger from './widgets/Debugger.svelte';
@@ -16,6 +17,10 @@
 
     case 'HtmlContent':
       component = HtmlContent;
+      break;
+
+    case 'BitcoinPrice':
+      component = BitcoinPrice;
       break;
   }
 </script>

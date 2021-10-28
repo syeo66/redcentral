@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { QueryClient, QueryClientProvider } from '@sveltestack/svelte-query';
   import type { User } from 'firebase/auth';
 
   import Header from './component/Header.svelte';
@@ -10,17 +11,21 @@
   let user: User;
 
   auth.onAuthStateChanged((u) => (user = u));
+
+  const queryClient = new QueryClient();
 </script>
 
-<div>
-  <Header />
-  <Navigation {user} />
-  {#if !user}
-    <Login />
-  {:else}
-    <Main {user} />
-  {/if}
-</div>
+<QueryClientProvider client={queryClient}>
+  <div>
+    <Header />
+    <Navigation {user} />
+    {#if !user}
+      <Login />
+    {:else}
+      <Main {user} />
+    {/if}
+  </div>
+</QueryClientProvider>
 
 <style lang="scss">
   div {

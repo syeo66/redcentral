@@ -13,5 +13,9 @@
     align-items: center;
     width: 100%;
     height: 100%;
+    padding: 0.7rem 0;
+    @media screen and (min-width: 800px) {
+      padding: 0;
+    }
   }
 </style>
