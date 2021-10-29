@@ -1,4 +1,6 @@
 <script lang="ts">
+  import Icon from 'svelte-awesome';
+  import { signOut as signOutIcon } from 'svelte-awesome/icons';
   import { signOut, User } from 'firebase/auth';
 
   import Button from './Button.svelte';
@@ -14,7 +16,7 @@
 <nav>
   {#if user}
     <a href="/" class="active">Home</a>
-    <Button on:click={handleLogout}>Logout</Button>
+    <Button on:click={handleLogout}><Icon data={signOutIcon} />&nbsp;Logout</Button>
   {/if}
 </nav>
 

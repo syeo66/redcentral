@@ -1,4 +1,6 @@
 <script>
+  import Icon from 'svelte-awesome';
+  import { google } from 'svelte-awesome/icons';
   import { signInWithPopup } from 'firebase/auth';
 
   import Button from './Button.svelte';
@@ -19,7 +21,7 @@
   {#if error}
     <div>{JSON.stringify(error)}</div>
   {/if}
-  <Button on:click={handleLogin}>Login with Google</Button>
+  <Button on:click={handleLogin}><Icon data={google} />&nbsp;Login with Google</Button>
 </div>
 
 <style lang="scss">

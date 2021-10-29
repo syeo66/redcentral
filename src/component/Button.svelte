@@ -10,7 +10,9 @@
 
 <style lang="scss">
   button {
-    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border: 1px solid #666;
     border-bottom: 1px solid #000;
     border-right: 1px solid #000;
@@ -22,5 +24,7 @@
     text-decoration: none;
     transition: background-color 250ms, box-shadow 250ms;
     cursor: pointer;
+    font-size: 1rem;
+    line-height: 1rem;
   }
 </style>
