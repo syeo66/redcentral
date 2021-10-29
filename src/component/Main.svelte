@@ -1,12 +1,14 @@
 <script lang="ts">
-  import type { User } from 'firebase/auth';
+  import type { Dashboard } from '../types';
 
   import WidgetGrid from './WidgetGrid.svelte';
 
-  export let user: User;
+  export let id = '';
+  export let dashboards: Record<string, Dashboard>;
+  $: currentDashboard = dashboards[id];
 </script>
 
-<main><WidgetGrid {user} /></main>
+<main><WidgetGrid dashboard={currentDashboard} /></main>
 
 <style lang="scss">
   main {

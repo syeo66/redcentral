@@ -1,12 +1,17 @@
 <script lang="ts">
-  import Icon from 'svelte-awesome';
-  import { signOut as signOutIcon } from 'svelte-awesome/icons';
+  import { link } from 'svelte-routing';
   import { signOut, User } from 'firebase/auth';
+
+  import Icon from 'svelte-awesome';
+  import { signOut as signOutIcon, globe, lock } from 'svelte-awesome/icons';
 
   import Button from './Button.svelte';
   import { auth } from '../firebase';
+  import type { Dashboard } from '../types';
 
   export let user: User;
+  export let dashboards: Record<string, Dashboard> = {};
+  export let id = '';
 
   const handleLogout = () => {
     signOut(auth);
@@ -15,7 +20,14 @@
 
 <nav>
   {#if user}
-    <a href="/" class="active">Home</a>
+    {#if dashboards}
+      {#each Object.entries(dashboards) as [key, dashboard]}
+        <a href={`/${key}`} use:link class:active={id === key}>
+          <Icon data={dashboard.public ? globe : lock} />&nbsp;{dashboard.name}
+        </a>
+      {/each}
+    {/if}
+
     <Button on:click={handleLogout}><Icon data={signOutIcon} />&nbsp;Logout</Button>
   {/if}
 </nav>
@@ -31,7 +43,9 @@
     border-top: 1px solid #666;
 
     a {
-      display: block;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
       border: 1px solid #666;
       border-bottom: 1px solid #000;
       border-right: 1px solid #000;

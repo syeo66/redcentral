@@ -6,27 +6,19 @@
   import Debugger from './widgets/Debugger.svelte';
   import HtmlContent from './widgets/HtmlContent.svelte';
 
-  let component: any = Debugger;
-
   export let panel: Panel;
-
-  switch (panel.component) {
-    case 'CryptoCharts':
-      component = CryptoCharts;
-      break;
-
-    case 'HtmlContent':
-      component = HtmlContent;
-      break;
-
-    case 'BitcoinPrice':
-      component = BitcoinPrice;
-      break;
-  }
 </script>
 
 <div class={`colspan-${panel.size.columns} rowspan-${panel.size.rows}`}>
-  <svelte:component this={component} {panel} />
+  {#if panel.component === 'CryptoCharts'}
+    <CryptoCharts />
+  {:else if panel.component === 'HtmlContent'}
+    <HtmlContent {panel} />
+  {:else if panel.component === 'BitcoinPrice'}
+    <BitcoinPrice />
+  {:else}
+    <Debugger {panel} />
+  {/if}
 </div>
 
 <style lang="scss">
