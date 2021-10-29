@@ -18,5 +18,6 @@ pipelines:
             #- npm install -g yarn
             - yarn install
             #- echo "REACT_APP_CLIENT_ID=$CLIENT_ID" > .env
+            - echo $FIREBASE_CONFIG > src/firebase/firebaseConfig.ts
             - yarn build
             - rsync -az --exclude .git --exclude .env --exclude node_modules --delete $BITBUCKET_CLONE_DIR/public/ $PUBLISHING_TARGET
