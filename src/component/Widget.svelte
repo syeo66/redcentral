@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { onDestroy } from 'svelte';
+
   import type { Panel } from '../types';
   import BitcoinPrice from './widgets/BitcoinPrice.svelte';
 
@@ -7,9 +9,28 @@
   import HtmlContent from './widgets/HtmlContent.svelte';
 
   export let panel: Panel;
+  let isFullScreen = false;
+
+  const handleEscape = ({ key }) => {
+    if (key === 'Escape') isFullScreen = false;
+  };
+
+  document.addEventListener('keydown', handleEscape);
+
+  const handleDblClick = () => {
+    isFullScreen = !isFullScreen;
+  };
+
+  onDestroy(() => {
+    document.removeEventListener('keydown', handleEscape);
+  });
 </script>
 
-<div class={`colspan-${panel.size.columns} rowspan-${panel.size.rows}`}>
+<div
+  class={`colspan-${panel.size.columns} rowspan-${panel.size.rows}`}
+  class:fullscreen={isFullScreen}
+  on:dblclick={handleDblClick}
+>
   {#if panel.component === 'CryptoCharts'}
     <CryptoCharts />
   {:else if panel.component === 'HtmlContent'}
@@ -23,6 +44,18 @@
 
 <style lang="scss">
   div {
+    &.fullscreen {
+      position: absolute;
+      left: 0;
+      top: 0;
+      background-color: #222;
+      width: 100%;
+      height: 100%;
+      bottom: 0;
+      right: 0;
+      z-index: 100;
+    }
+
     &:not(:last-child) {
       margin-bottom: 0.5rem;
 
@@ -31,6 +64,7 @@
       }
     }
 
+    user-select: none;
     border-radius: 0.5rem;
     min-height: 3rem;
     background-color: rgba(0, 0, 0, 0.5);
