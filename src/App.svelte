@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onDestroy } from 'svelte';
+  import { onDestroy, onMount } from 'svelte';
   import { QueryClient, QueryClientProvider } from '@sveltestack/svelte-query';
   import { Router, Route } from 'svelte-routing';
   import type { User } from 'firebase/auth';

@@ -1,10 +1,13 @@
 <script lang="ts">
+  import DOMPurify from 'dompurify';
+
   import type { HtmlContentPanel } from '../../types';
 
   export let panel: HtmlContentPanel;
+  $: output = DOMPurify.sanitize(panel.settings.content);
 </script>
 
-<div>{@html panel.settings.content}</div>
+<div>{@html output}</div>
 
 <style lang="scss">
   div {
