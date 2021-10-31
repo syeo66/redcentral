@@ -1,14 +1,16 @@
 <script lang="ts">
-  import { onDestroy, onMount } from 'svelte';
   import { QueryClient, QueryClientProvider } from '@sveltestack/svelte-query';
   import { Router, Route } from 'svelte-routing';
-  import type { User } from 'firebase/auth';
   import { doc, DocumentSnapshot, onSnapshot } from 'firebase/firestore';
+  import { onDestroy } from 'svelte';
+  import type { User } from 'firebase/auth';
 
   import Header from './component/Header.svelte';
   import Login from './component/Login.svelte';
   import Main from './component/Main.svelte';
   import Navigation from './component/Navigation.svelte';
+  import Tools from './component/Tools.svelte';
+
   import { auth, db } from './firebase';
   import type { Dashboard, DashboardUser } from './types';
 
@@ -42,12 +44,15 @@
 
 <QueryClientProvider client={queryClient}>
   <Router>
-    <div>
+    <section>
       <Header />
       {#if !user}
         <nav />
+        <div class="tools" />
         <Login />
       {:else}
+        <Tools />
+
         <Route path="/:id" let:params>
           <Navigation {user} id={params.id} {dashboards} />
           <Main id={params.id} {dashboards} />
@@ -58,28 +63,42 @@
           <Main id={firstId} {dashboards} />
         </Route>
       {/if}
-    </div>
+    </section>
   </Router>
 </QueryClientProvider>
 
 <style lang="scss">
-  div {
+  section {
     @media screen and (min-width: 800px) {
       display: grid;
       grid-template-columns: 16rem 1fr;
-      grid-template-rows: 5rem 1fr;
-      grid-template-areas: 'header main' 'nav main';
+      grid-template-rows: 5rem 1fr 4rem;
+      grid-template-areas: 'header main' 'nav main' 'tools main';
       height: 100%;
     }
 
-    nav {
+    nav,
+    .tools {
       background: #333;
       border-bottom: 1px solid #000;
       border-top: 1px solid #666;
 
       @media screen and (min-width: 800px) {
-        border-bottom: 0 transparent none;
+        &:last-child {
+          border-bottom: 0 transparent none;
+        }
+      }
+    }
+
+    nav {
+      @media screen and (min-width: 800px) {
         grid-area: nav;
+      }
+    }
+
+    .tools {
+      @media screen and (min-width: 800px) {
+        grid-area: tools;
       }
     }
   }

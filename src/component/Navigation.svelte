@@ -77,7 +77,9 @@
     }
 
     @media screen and (min-width: 800px) {
-      border-bottom: 0 transparent none;
+      &:last-child {
+        border-bottom: 0 transparent none;
+      }
       grid-area: nav;
     }
   }
