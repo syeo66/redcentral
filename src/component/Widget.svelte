@@ -1,28 +1,46 @@
 <script lang="ts">
   import { onDestroy } from 'svelte';
 
-  import type { Panel } from '../types';
   import BitcoinPrice from './widgets/BitcoinPrice.svelte';
-
   import CryptoCharts from './widgets/CryptoCharts.svelte';
   import Debugger from './widgets/Debugger.svelte';
   import HtmlContent from './widgets/HtmlContent.svelte';
 
+  import type { Panel } from '../types';
+
   export let panel: Panel;
+
+  let component: HTMLElement;
   let isFullScreen = false;
 
   const handleEscape = ({ key }) => {
-    if (key === 'Escape') isFullScreen = false;
+    if (key === 'Escape') {
+      isFullScreen = false;
+      document.exitFullscreen();
+    }
   };
 
-  document.addEventListener('keydown', handleEscape);
+  const handleFullscreen = () => {
+    isFullScreen = !!document.fullscreenElement;
+  };
 
   const handleDblClick = () => {
     isFullScreen = !isFullScreen;
+
+    if (isFullScreen) {
+      component.requestFullscreen();
+      return;
+    }
+
+    document.exitFullscreen();
   };
+
+  document.addEventListener('keydown', handleEscape);
+  document.addEventListener('fullscreenchange', handleFullscreen, false);
 
   onDestroy(() => {
     document.removeEventListener('keydown', handleEscape);
+    document.removeEventListener('fullscreenchange', handleFullscreen);
   });
 </script>
 
@@ -30,6 +48,7 @@
   class={`colspan-${panel.size.columns} rowspan-${panel.size.rows}`}
   class:fullscreen={isFullScreen}
   on:dblclick={handleDblClick}
+  bind:this={component}
 >
   {#if panel.component === 'CryptoCharts'}
     <CryptoCharts />
