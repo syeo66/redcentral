@@ -16,6 +16,7 @@
 
   let user: User;
   let firstId = '';
+  let isEditMode = false;
 
   auth.onAuthStateChanged((u) => (user = u));
 
@@ -39,6 +40,8 @@
       firstId = doc.data().dashboards[0].uuid;
     });
 
+  const handleEditMode = (e: CustomEvent<boolean>) => (isEditMode = e.detail);
+
   onDestroy(() => unsub && unsub());
 </script>
 
@@ -51,15 +54,15 @@
         <div class="tools" />
         <Login />
       {:else}
-        <Tools />
+        <Tools on:editmode={handleEditMode} />
 
         <Route path="/:id" let:params>
-          <Navigation {user} id={params.id} {dashboards} />
+          <Navigation {user} id={params.id} {dashboards} {isEditMode} />
           <Main id={params.id} {dashboards} />
         </Route>
 
         <Route path="/">
-          <Navigation {user} id={firstId} {dashboards} />
+          <Navigation {user} id={firstId} {dashboards} {isEditMode} />
           <Main id={firstId} {dashboards} />
         </Route>
       {/if}

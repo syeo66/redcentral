@@ -3,18 +3,25 @@
   import { signOut, User } from 'firebase/auth';
 
   import Icon from 'svelte-awesome';
-  import { signOut as signOutIcon, globe, lock } from 'svelte-awesome/icons';
+  import { signOut as signOutIcon, globe, lock, cog } from 'svelte-awesome/icons';
 
   import Button from './Button.svelte';
   import { auth } from '../firebase';
   import type { Dashboard } from '../types';
 
-  export let user: User;
   export let dashboards: Record<string, Dashboard> = {};
   export let id = '';
+  export let isEditMode = false;
+  export let user: User;
 
   const handleLogout = () => {
     signOut(auth);
+  };
+
+  const handleDashboardEditClick = (e: MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    alert('Dashboard editing is not implemented yet.');
   };
 </script>
 
@@ -24,6 +31,9 @@
       {#each Object.entries(dashboards) as [key, dashboard]}
         <a href={`/${key}`} use:link class:active={id === key}>
           <Icon data={dashboard.public ? globe : lock} />&nbsp;{dashboard.name}
+          {#if isEditMode}
+            <div class="icon" on:click={handleDashboardEditClick}><Icon data={cog} /></div>
+          {/if}
         </a>
       {/each}
     {/if}
@@ -58,6 +68,12 @@
       transition: background-color 250ms, box-shadow 250ms;
       cursor: pointer;
       margin-bottom: 0.3rem;
+
+      .icon {
+        margin-left: auto;
+        height: 1rem;
+        width: 1rem;
+      }
 
       &.active {
         background-color: #333;
