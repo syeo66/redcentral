@@ -3,7 +3,7 @@
   import { signOut, User } from 'firebase/auth';
 
   import Icon from 'svelte-awesome';
-  import { signOut as signOutIcon, globe, lock, cog } from 'svelte-awesome/icons';
+  import { signOut as signOutIcon, globe, lock, cog, plusCircle } from 'svelte-awesome/icons';
 
   import Button from './Button.svelte';
   import { auth } from '../firebase';
@@ -23,6 +23,10 @@
     e.stopPropagation();
     alert('Dashboard editing is not implemented yet.');
   };
+
+  const handleDashboardAddClick = () => {
+    alert('Dashboard creation is not implemented yet.');
+  };
 </script>
 
 <nav>
@@ -38,7 +42,15 @@
       {/each}
     {/if}
 
-    <Button on:click={handleLogout}><Icon data={signOutIcon} />&nbsp;Logout</Button>
+    {#if isEditMode}
+      <div class="add-dashboard">
+        <span on:click={handleDashboardAddClick}><Icon data={plusCircle} scale={2} /></span>
+      </div>
+    {/if}
+
+    <Button on:click={handleLogout} style="margin-top:auto;">
+      <Icon data={signOutIcon} />&nbsp;Logout
+    </Button>
   {/if}
 </nav>
 
@@ -51,6 +63,17 @@
     padding: 1rem;
     border-bottom: 1px solid #000;
     border-top: 1px solid #666;
+
+    .add-dashboard {
+      display: flex;
+      height: 3rem;
+      justify-content: flex-end;
+      align-items: center;
+
+      span {
+        cursor: pointer;
+      }
+    }
 
     a {
       display: flex;

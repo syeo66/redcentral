@@ -1,12 +1,16 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
 
+  export let style = '';
+
   const dispatch = createEventDispatcher();
 
   const handleClick = () => dispatch('click');
 </script>
 
-<button on:click={handleClick}><slot /></button>
+<button on:click={handleClick} {style}>
+  <slot />
+</button>
 
 <style lang="scss">
   button {
