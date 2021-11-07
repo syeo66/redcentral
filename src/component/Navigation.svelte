@@ -15,7 +15,10 @@
   export let isEditMode = false;
   export let user: User;
 
+  const emptyDashboard: Dashboard = { uuid: '', name: '', public: false, panels: [] };
+
   let showConfiguration = false;
+  let configureDashboard: Dashboard = { ...emptyDashboard };
 
   const handleCancel = () => {
     showConfiguration = false;
@@ -29,14 +32,16 @@
     signOut(auth);
   };
 
-  const handleDashboardEditClick = (e: MouseEvent) => {
+  const handleDashboardEditClick = (dashboard: Dashboard) => (e: MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
 
+    configureDashboard = { ...dashboard };
     showConfiguration = true;
   };
 
   const handleDashboardAddClick = () => {
+    configureDashboard = { ...emptyDashboard };
     showConfiguration = true;
   };
 </script>
@@ -48,7 +53,7 @@
         <a href={`/${key}`} use:link class:active={id === key}>
           <Icon data={dashboard.public ? globe : lock} />&nbsp;{dashboard.name}
           {#if isEditMode}
-            <div class="icon" on:click={handleDashboardEditClick}><Icon data={cog} /></div>
+            <div class="icon" on:click={handleDashboardEditClick(dashboard)}><Icon data={cog} /></div>
           {/if}
         </a>
       {/each}
@@ -66,7 +71,7 @@
   {/if}
 
   {#if showConfiguration}
-    <DashboardForm on:cancel={handleCancel} on:confirm={handleConfirm} />
+    <DashboardForm on:cancel={handleCancel} on:confirm={handleConfirm} dashboard={configureDashboard} />
   {/if}
 </nav>
 

@@ -10,6 +10,7 @@
 </script>
 
 <div class="form">
+  <slot />
   <div class="buttons">
     <Button isPrimary on:click={handleConfirm}>Save</Button>
     <Button on:click={handleCancel}>Cancel</Button>
@@ -22,5 +23,6 @@
     justify-content: flex-end;
     margin: 0 0 -0.5rem;
     padding: 0;
+    margin-top: 1rem;
   }
 </style>
