@@ -2,13 +2,14 @@
   import { createEventDispatcher } from 'svelte';
 
   export let style = '';
+  export let isPrimary = false;
 
   const dispatch = createEventDispatcher();
 
   const handleClick = () => dispatch('click');
 </script>
 
-<button on:click={handleClick} {style}>
+<button on:click={handleClick} class:primary={isPrimary} {style}>
   <slot />
 </button>
 
@@ -30,5 +31,17 @@
     cursor: pointer;
     font-size: 1rem;
     line-height: 1rem;
+
+    &.primary {
+      background-color: #933;
+      color: #eee;
+      border: 1px solid #b88;
+      border-bottom: 1px solid #300;
+      border-right: 1px solid #300;
+    }
+
+    &:not(:last-child) {
+      margin-right: 0.5rem;
+    }
   }
 </style>

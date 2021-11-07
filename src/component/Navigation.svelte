@@ -6,6 +6,7 @@
   import { signOut as signOutIcon, globe, lock, cog, plusCircle } from 'svelte-awesome/icons';
 
   import Button from './Button.svelte';
+  import DashboardForm from './DashboardForm.svelte';
   import { auth } from '../firebase';
   import type { Dashboard } from '../types';
 
@@ -14,6 +15,16 @@
   export let isEditMode = false;
   export let user: User;
 
+  let showConfiguration = false;
+
+  const handleCancel = () => {
+    showConfiguration = false;
+  };
+
+  const handleConfirm = () => {
+    showConfiguration = false;
+  };
+
   const handleLogout = () => {
     signOut(auth);
   };
@@ -21,11 +32,12 @@
   const handleDashboardEditClick = (e: MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    alert('Dashboard editing is not implemented yet.');
+
+    showConfiguration = true;
   };
 
   const handleDashboardAddClick = () => {
-    alert('Dashboard creation is not implemented yet.');
+    showConfiguration = true;
   };
 </script>
 
@@ -51,6 +63,10 @@
     <Button on:click={handleLogout} style="margin-top:auto;">
       <Icon data={signOutIcon} />&nbsp;Logout
     </Button>
+  {/if}
+
+  {#if showConfiguration}
+    <DashboardForm on:cancel={handleCancel} on:confirm={handleConfirm} />
   {/if}
 </nav>
 
