@@ -71,7 +71,7 @@
   {/if}
 
   {#if showConfiguration}
-    <DashboardForm on:cancel={handleCancel} on:confirm={handleConfirm} dashboard={configureDashboard} />
+    <DashboardForm on:cancel={handleCancel} on:confirm={handleConfirm} dashboard={configureDashboard} {user} />
   {/if}
 </nav>
 

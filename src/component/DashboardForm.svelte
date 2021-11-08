@@ -1,17 +1,32 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
+  import { v4 as uuidv4 } from 'uuid';
+
+  import { doc, setDoc } from '@firebase/firestore';
+  import type { User } from '@firebase/auth';
 
   import Checkbox from './Checkbox.svelte';
   import Form from './Form.svelte';
   import Input from './Input.svelte';
   import Modal from './Modal.svelte';
+  import { db } from '../firebase';
   import type { Dashboard } from '../types';
 
+  export let user: User;
   export let dashboard: Dashboard = { uuid: '', name: '', public: false, panels: [] };
 
   const dispatch = createEventDispatcher();
 
-  const handleConfirm = () => dispatch('confirm');
+  const handleConfirm = async () => {
+    if (!user) {
+      return;
+    }
+
+    const updateDashboard = { ...dashboard, uuid: dashboard.uuid || uuidv4() };
+    setDoc(doc(db, 'users', user.uid, 'dashboards', updateDashboard.uuid), updateDashboard);
+
+    dispatch('confirm');
+  };
   const handleCancel = () => dispatch('cancel');
 </script>
 
