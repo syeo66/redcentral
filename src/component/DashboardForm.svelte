@@ -22,3 +22,9 @@
     <Checkbox label="Is public" name="public" value={dashboard.public} />
   </Form>
 </Modal>
+
+<style lang="scss">
+  h2 {
+    margin-top: 0;
+  }
+</style>
