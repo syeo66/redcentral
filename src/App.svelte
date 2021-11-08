@@ -1,7 +1,7 @@
 <script lang="ts">
   import { QueryClient, QueryClientProvider } from '@sveltestack/svelte-query';
   import { Router, Route } from 'svelte-routing';
-  import { doc, DocumentSnapshot, onSnapshot } from 'firebase/firestore';
+  import { onSnapshot, collection, QuerySnapshot } from 'firebase/firestore';
   import { onDestroy } from 'svelte';
   import type { User } from 'firebase/auth';
 
@@ -12,7 +12,7 @@
   import Tools from './component/Tools.svelte';
 
   import { auth, db } from './firebase';
-  import type { Dashboard, DashboardUser } from './types';
+  import type { Dashboard } from './types';
 
   let user: User;
   let firstId = '';
@@ -26,18 +26,15 @@
 
   $: unsub =
     user &&
-    onSnapshot(doc(db, 'users', user.uid), (doc: DocumentSnapshot<DashboardUser>) => {
-      if (!doc.exists || !doc.data().dashboards) {
-        return;
-      }
+    onSnapshot(collection(db, 'users', user?.uid || 'empty', 'dashboards'), (results: QuerySnapshot<Dashboard>) => {
+      firstId = '';
 
-      const dashboardReducer = (acc: Record<string, Dashboard>, dashboard: Dashboard) => ({
-        ...acc,
-        [dashboard.uuid]: dashboard,
+      results.forEach((entry) => {
+        if (!firstId) {
+          firstId = entry.id;
+        }
+        dashboards[entry.id] = entry.data();
       });
-
-      dashboards = doc.data().dashboards.reduce(dashboardReducer, {});
-      firstId = doc.data().dashboards[0].uuid;
     });
 
   const handleEditMode = (e: CustomEvent<boolean>) => (isEditMode = e.detail);

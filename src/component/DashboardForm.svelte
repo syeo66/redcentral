@@ -33,8 +33,8 @@
 <Modal>
   <Form on:cancel={handleCancel} on:confirm={handleConfirm}>
     <h2>Dashboard</h2>
-    <Input label="Name" name="name" value={dashboard.name} />
-    <Checkbox label="Is public" name="public" value={dashboard.public} />
+    <Input label="Name" name="name" bind:value={dashboard.name} />
+    <Checkbox label="Is public" name="public" bind:value={dashboard.public} />
   </Form>
 </Modal>
 

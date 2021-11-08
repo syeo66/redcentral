@@ -5,7 +5,10 @@
   export let id = `${name}-${Math.round(Math.random() * 10000000)}`;
 </script>
 
-<div class="row"><label for={id}>{label}</label><input {id} {name} type="checkbox" checked={value} /></div>
+<div class="row">
+  <label for={id}>{label}</label>
+  <input {id} {name} type="checkbox" bind:checked={value} />
+</div>
 
 <style lang="scss">
   .row {

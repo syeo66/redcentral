@@ -5,7 +5,10 @@
   export let value = '';
 </script>
 
-<div class="row"><label for={id}>{label}</label><input {id} {name} {value} /></div>
+<div class="row">
+  <label for={id}>{label}</label>
+  <input {id} {name} bind:value />
+</div>
 
 <style lang="scss">
   .row {
