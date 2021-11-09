@@ -9,6 +9,7 @@
   import type { Panel } from '../types';
 
   export let panel: Panel;
+  export let isEditMode = false;
 
   let component: HTMLElement;
   let isFullScreen = false;

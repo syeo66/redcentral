@@ -55,12 +55,12 @@
 
         <Route path="/:id" let:params>
           <Navigation {user} id={params.id} {dashboards} {isEditMode} />
-          <Main id={params.id} {dashboards} />
+          <Main id={params.id} {dashboards} {isEditMode} />
         </Route>
 
         <Route path="/">
           <Navigation {user} id={firstId} {dashboards} {isEditMode} />
-          <Main id={firstId} {dashboards} />
+          <Main id={firstId} {dashboards} {isEditMode} />
         </Route>
       {/if}
     </section>

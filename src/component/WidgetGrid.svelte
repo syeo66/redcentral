@@ -1,9 +1,17 @@
 <script lang="ts">
+  import Icon from 'svelte-awesome';
+  import { plusCircle } from 'svelte-awesome/icons';
+
   import type { Dashboard } from '../types';
 
   import Widget from './Widget.svelte';
 
   export let dashboard: Dashboard;
+  export let isEditMode = false;
+
+  const handleWidgetAddClick = () => {
+    return false;
+  };
 
   $: panels = [...(dashboard?.panels || [])].sort((a, b) => a.position - b.position);
 </script>
@@ -11,8 +19,14 @@
 <div>
   {#if dashboard}
     {#each panels as panel}
-      <Widget {panel} />
+      <Widget {panel} {isEditMode} />
     {/each}
+
+    {#if isEditMode}
+      <div class="add-widget">
+        <span on:click={handleWidgetAddClick}><Icon data={plusCircle} scale={2} /></span>
+      </div>
+    {/if}
   {/if}
 </div>
 
@@ -26,6 +40,16 @@
       max-height: 100%;
       grid-auto-flow: dense;
       max-width: 100%;
+
+      .add-widget {
+        border-radius: 0.5rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(0, 0, 0, 0.3);
+        padding: 0.25rem;
+        cursor: pointer;
+      }
     }
   }
 </style>
