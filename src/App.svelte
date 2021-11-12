@@ -1,7 +1,7 @@
 <script lang="ts">
   import { QueryClient, QueryClientProvider } from '@sveltestack/svelte-query';
   import { Router, Route } from 'svelte-routing';
-  import { onSnapshot, collection, QuerySnapshot } from 'firebase/firestore';
+  import { onSnapshot, collection, QuerySnapshot, Unsubscribe } from 'firebase/firestore';
   import { onDestroy } from 'svelte';
   import type { User } from 'firebase/auth';
 
@@ -17,25 +17,39 @@
   let user: User;
   let firstId = '';
   let isEditMode = false;
+  let unsub: Unsubscribe;
 
-  auth.onAuthStateChanged((u) => (user = u));
+  auth.onAuthStateChanged((u) => {
+    user = u;
+
+    if (!user) {
+      unsub = null;
+
+      return;
+    }
+
+    unsub = onSnapshot(
+      collection(db, 'users', user?.uid || 'empty', 'dashboards'),
+      (results: QuerySnapshot<Dashboard>) => {
+        firstId = '';
+
+        const newDashboards = {};
+
+        results.forEach((entry) => {
+          if (!firstId) {
+            firstId = entry.id;
+          }
+          newDashboards[entry.id] = entry.data();
+        });
+
+        dashboards = newDashboards;
+      }
+    );
+  });
 
   const queryClient = new QueryClient();
 
   let dashboards: Record<string, Dashboard> = {};
-
-  $: unsub =
-    user &&
-    onSnapshot(collection(db, 'users', user?.uid || 'empty', 'dashboards'), (results: QuerySnapshot<Dashboard>) => {
-      firstId = '';
-
-      results.forEach((entry) => {
-        if (!firstId) {
-          firstId = entry.id;
-        }
-        dashboards[entry.id] = entry.data();
-      });
-    });
 
   const handleEditMode = (e: CustomEvent<boolean>) => (isEditMode = e.detail);
 
