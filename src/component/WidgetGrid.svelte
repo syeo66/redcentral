@@ -5,6 +5,7 @@
   import type { Dashboard } from '../types';
 
   import Widget from './Widget.svelte';
+  import WidgetForm from './WidgetForm.svelte';
 
   export let dashboard: Dashboard;
   export let isEditMode = false;
@@ -28,6 +29,8 @@
       </div>
     {/if}
   {/if}
+
+  <WidgetForm />
 </div>
 
 <style lang="scss">
