@@ -10,8 +10,18 @@
   export let dashboard: Dashboard;
   export let isEditMode = false;
 
+  let showConfiguration = false;
+
   const handleWidgetAddClick = () => {
-    return false;
+    showConfiguration = true;
+  };
+
+  const handleCancel = () => {
+    showConfiguration = false;
+  };
+
+  const handleConfirm = () => {
+    showConfiguration = false;
   };
 
   $: panels = [...(dashboard?.panels || [])].sort((a, b) => a.position - b.position);
@@ -24,13 +34,15 @@
     {/each}
 
     {#if isEditMode}
-      <div class="add-widget">
-        <span on:click={handleWidgetAddClick}><Icon data={plusCircle} scale={2} /></span>
+      <div class="add-widget" on:click={handleWidgetAddClick}>
+        <span><Icon data={plusCircle} scale={2} /></span>
       </div>
     {/if}
   {/if}
 
-  <WidgetForm />
+  {#if showConfiguration}
+    <WidgetForm on:cancel={handleCancel} on:confirm={handleConfirm} />
+  {/if}
 </div>
 
 <style lang="scss">

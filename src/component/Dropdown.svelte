@@ -1,22 +1,16 @@
+<script context="module" lang="ts">
+  export interface Option {
+    value: string | number | boolean;
+    label: string;
+  }
+</script>
+
 <script lang="ts">
-  let options = [
-    {
-      value: '1',
-      label: 'Option 1',
-    },
-    {
-      value: '2',
-      label: 'Option 2',
-    },
-    {
-      value: '3',
-      label: 'Option 3',
-    },
-    {
-      value: '4',
-      label: 'Option 4',
-    },
-  ];
+  import { createEventDispatcher } from 'svelte';
+
+  const dispatch = createEventDispatcher<{ change: Option }>();
+
+  export let options: Option[] = [];
 
   let selected = options?.[0]?.value;
   let active = false;
@@ -27,18 +21,21 @@
     active = !active;
   };
 
-  const handleClick = (option: string) => {
-    selected = option;
+  const handleClick = (option: Option) => {
+    selected = option.value;
+    dispatch('change', option);
   };
 </script>
 
 <div class="dropdown" class:active on:click={handleToggle}>
-  <div class="selected">{selectedOption.label}</div>
+  <div class="selected">{selectedOption?.label || 'Please choose...'}</div>
   <ul class="options">
     {#each options as option}
-      <li class="option" on:click={() => handleClick(option.value)}>
-        {option.label}
-      </li>
+      {#if option.value !== selected}
+        <li class="option" on:click={() => handleClick(option)}>
+          {option.label}
+        </li>
+      {/if}
     {/each}
   </ul>
 </div>
