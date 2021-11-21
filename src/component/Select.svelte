@@ -1,13 +1,16 @@
 <script lang="ts">
+  import Dropdown, { Option } from './Dropdown.svelte';
+
+  export let options: Option[] = [];
   export let name: string;
   export let id = `${name}-${Math.round(Math.random() * 10000000)}`;
   export let label: string;
-  export let value = '';
+  export let value: string | number = '';
 </script>
 
 <div class="row">
   <label for={id}>{label}</label>
-  <input {id} {name} bind:value />
+  <Dropdown {id} {name} {options} bind:value />
 </div>
 
 <style lang="scss">
@@ -20,10 +23,6 @@
       width: 10rem;
       display: flex;
       align-items: center;
-    }
-
-    > input {
-      min-width: 15rem;
     }
   }
 </style>

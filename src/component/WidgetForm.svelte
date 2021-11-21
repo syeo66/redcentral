@@ -1,38 +1,37 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
 
-  import Dropdown, { Option } from './Dropdown.svelte';
+  import type { Option } from './Dropdown.svelte';
+
   import Form from './Form.svelte';
   import Modal from './Modal.svelte';
+  import Select from './Select.svelte';
 
   const dispatch = createEventDispatcher();
 
+  let value = 1;
   let options: Option[] = [
     {
-      value: 1,
-      label: 'Option 1',
+      value: 'CryptoCharts',
+      label: 'Crypto Charts',
     },
     {
-      value: 2,
-      label: 'Option 2',
+      value: 'BitcoinPrice',
+      label: 'Bitcoin Price',
     },
     {
-      value: 3,
-      label: 'Option 3',
+      value: 'Debugger',
+      label: 'Debugger',
     },
     {
-      value: 4,
-      label: 'Option 4',
+      value: 'HtmlContent',
+      label: 'HTML Content',
     },
     {
-      value: 5,
-      label: 'Option 5',
+      value: 'ImageViewer',
+      label: 'Image Viewer',
     },
   ];
-
-  const handleChange = (event: CustomEvent<Option>) => {
-    console.log(event.detail);
-  };
 
   const handleConfirm = () => dispatch('confirm');
   const handleCancel = () => dispatch('cancel');
@@ -41,7 +40,7 @@
 <Modal>
   <Form on:cancel={handleCancel} on:confirm={handleConfirm}>
     <h2>Widget</h2>
-    <Dropdown {options} on:change={handleChange} />
+    <Select name="widgetType" label="Widget Type" {options} bind:value />
   </Form>
 </Modal>
 

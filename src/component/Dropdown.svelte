@@ -1,6 +1,6 @@
 <script context="module" lang="ts">
   export interface Option {
-    value: string | number | boolean;
+    value: string | number;
     label: string;
   }
 </script>
@@ -11,27 +11,30 @@
   const dispatch = createEventDispatcher<{ change: Option }>();
 
   export let options: Option[] = [];
+  export let id: string;
+  export let name: string;
+  export let value = options?.[0]?.value;
 
-  let selected = options?.[0]?.value;
   let active = false;
 
-  $: selectedOption = options.find((option) => option.value === selected);
+  $: selectedOption = options.find((option) => option.value === value);
 
   const handleToggle = () => {
     active = !active;
   };
 
   const handleClick = (option: Option) => {
-    selected = option.value;
+    value = option.value;
     dispatch('change', option);
   };
 </script>
 
 <div class="dropdown" class:active on:click={handleToggle}>
+  <input {id} {name} {value} type="hidden" />
   <div class="selected">{selectedOption?.label || 'Please choose...'}</div>
   <ul class="options">
     {#each options as option}
-      {#if option.value !== selected}
+      {#if option.value !== value}
         <li class="option" on:click={() => handleClick(option)}>
           {option.label}
         </li>
@@ -49,6 +52,7 @@
     padding: 0.5rem;
     background: #333;
     cursor: pointer;
+    min-width: 15rem;
 
     &.active {
       .options {
