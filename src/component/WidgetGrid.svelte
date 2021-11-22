@@ -2,11 +2,14 @@
   import Icon from 'svelte-awesome';
   import { plusCircle } from 'svelte-awesome/icons';
 
+  import type { User } from '@firebase/auth';
+
   import type { Dashboard } from '../types';
 
   import Widget from './Widget.svelte';
   import WidgetForm from './WidgetForm.svelte';
 
+  export let user: User;
   export let dashboard: Dashboard;
   export let isEditMode = false;
 
@@ -41,7 +44,7 @@
   {/if}
 
   {#if showConfiguration}
-    <WidgetForm on:cancel={handleCancel} on:confirm={handleConfirm} />
+    <WidgetForm on:cancel={handleCancel} on:confirm={handleConfirm} {dashboard} {user} />
   {/if}
 </div>
 

@@ -27,6 +27,7 @@
 
     dispatch('confirm');
   };
+
   const handleCancel = () => dispatch('cancel');
 </script>
 
