@@ -16,6 +16,7 @@
   export let value = options?.[0]?.value;
 
   let active = false;
+  let child: HTMLDivElement;
 
   $: selectedOption = options.find((option) => option.value === value);
 
@@ -27,9 +28,28 @@
     value = option.value;
     dispatch('change', option);
   };
+
+  const isExcluded = (target: EventTarget) => {
+    let parent = target;
+    while (parent) {
+      if (parent === child) {
+        return true;
+      }
+      const { parentNode } = parent as HTMLElement;
+      parent = parentNode;
+    }
+    return false;
+  };
+
+  const handleClickOutside = (event: MouseEvent) => {
+    if (!isExcluded(event.target)) {
+      active = false;
+    }
+  };
 </script>
 
-<div class="dropdown" class:active on:click={handleToggle}>
+<svelte:body on:click={handleClickOutside} />
+<div class="dropdown" class:active on:click={handleToggle} bind:this={child}>
   <input {id} {name} {value} type="hidden" />
   <div class="selected">{selectedOption?.label || 'Please choose...'}</div>
   <ul class="options">
