@@ -17,7 +17,7 @@
   .row {
     width: 100%;
     display: flex;
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.4rem;
 
     > label {
       width: 10rem;

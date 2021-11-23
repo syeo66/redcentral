@@ -1,13 +1,22 @@
 <script lang="ts" context="module">
-  const createPanel = <T extends WidgetType>(type: T): Panel => {
+  interface CreatePanelData {
+    columns?: number;
+    rows?: number;
+  }
+
+  const createPanel = <TType extends WidgetType, TData extends CreatePanelData>(
+    type: TType,
+    { rows = 1, columns = 1 }: TData = {} as TData
+  ): Panel => {
     switch (type) {
+      case 'CryptoCharts':
       case 'BitcoinPrice':
         return {
           component: type,
           uuid: uuidv4(),
           size: {
-            columns: 1,
-            rows: 1,
+            columns,
+            rows,
           },
           position: 0,
           settings: {},
@@ -24,12 +33,13 @@
   import type { User } from '@firebase/auth';
 
   import type { Option } from './Dropdown.svelte';
+  import type { Panel, WidgetType, Dashboard } from '../types';
 
   import Form from './Form.svelte';
+  import Input from './Input.svelte';
   import Modal from './Modal.svelte';
   import Select from './Select.svelte';
   import { db } from '../firebase';
-  import type { Panel, WidgetType, Dashboard } from '../types';
 
   export let user: User;
   export let dashboard: Dashboard;
@@ -37,6 +47,9 @@
   const dispatch = createEventDispatcher();
 
   let type: WidgetType | '' = '';
+  let columns = 1;
+  let rows = 1;
+
   let options: Option[] = [
     {
       value: 'CryptoCharts',
@@ -65,7 +78,7 @@
       return;
     }
 
-    const widget: Panel = createPanel(type);
+    const widget: Panel = createPanel(type, { rows, columns });
 
     if (!widget) {
       return;
@@ -86,6 +99,8 @@
   <Form on:cancel={handleCancel} on:confirm={handleConfirm}>
     <h2>Widget</h2>
     <Select name="widgetType" label="Widget Type" {options} bind:value={type} />
+    <Input name="columns" label="Columns" bind:value={columns} />
+    <Input name="rows" label="Rows" bind:value={rows} />
   </Form>
 </Modal>
 

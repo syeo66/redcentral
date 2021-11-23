@@ -52,7 +52,7 @@
     padding: 0.5rem;
     background: #333;
     cursor: pointer;
-    min-width: 15rem;
+    min-width: calc(14rem - 2px);
 
     &.active {
       .options {

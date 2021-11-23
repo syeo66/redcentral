@@ -2,7 +2,7 @@
   export let name: string;
   export let id = `${name}-${Math.round(Math.random() * 10000000)}`;
   export let label: string;
-  export let value = '';
+  export let value: string | number = '';
 </script>
 
 <div class="row">
@@ -14,7 +14,7 @@
   .row {
     width: 100%;
     display: flex;
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.4rem;
 
     > label {
       width: 10rem;
@@ -24,6 +24,7 @@
 
     > input {
       min-width: 15rem;
+      margin: 0;
     }
   }
 </style>
