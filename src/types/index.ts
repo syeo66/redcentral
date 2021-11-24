@@ -11,7 +11,6 @@ export interface BitcoinPricePanel extends BasePanel {
 
 export interface HtmlContentPanel extends BasePanel {
   component: 'HtmlContent';
-  settings: { content: string };
 }
 
 export interface CryptoChartsPanel extends BasePanel {

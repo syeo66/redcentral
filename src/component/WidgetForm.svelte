@@ -2,26 +2,25 @@
   interface CreatePanelData {
     columns?: number;
     rows?: number;
+    settings?: Record<string, string>;
   }
 
-  const createPanel = <TType extends WidgetType, TData extends CreatePanelData>(
-    type: TType,
-    { rows = 1, columns = 1 }: TData = {} as TData
+  const createPanel = <TData extends CreatePanelData>(
+    type: WidgetType,
+    { rows = 1, columns = 1, settings }: TData = {} as TData
   ): Panel => {
-    switch (type) {
-      case 'CryptoCharts':
-      case 'BitcoinPrice':
-        return {
-          component: type,
-          uuid: uuidv4(),
-          size: {
-            columns,
-            rows,
-          },
-          position: 0,
-          settings: {},
-        };
-    }
+    const uuid = uuidv4();
+
+    return {
+      component: type,
+      uuid,
+      size: {
+        columns,
+        rows,
+      },
+      position: 0,
+      settings,
+    };
   };
 </script>
 
@@ -33,12 +32,15 @@
   import type { User } from '@firebase/auth';
 
   import type { Option } from './Dropdown.svelte';
-  import type { Panel, WidgetType, Dashboard } from '../types';
+  import type { Panel, WidgetType, Dashboard, PanelType } from '../types';
 
   import Form from './Form.svelte';
   import Input from './Input.svelte';
   import Modal from './Modal.svelte';
   import Select from './Select.svelte';
+
+  import HtmlContentSettings from './settings/HtmlContentSettings.svelte';
+
   import { db } from '../firebase';
 
   export let user: User;
@@ -46,9 +48,10 @@
 
   const dispatch = createEventDispatcher();
 
-  let type: WidgetType | '' = '';
   let columns = 1;
   let rows = 1;
+  let settings = {};
+  let type: WidgetType | '' = '';
 
   let options: Option[] = [
     {
@@ -58,10 +61,6 @@
     {
       value: 'BitcoinPrice',
       label: 'Bitcoin Price',
-    },
-    {
-      value: 'Debugger',
-      label: 'Debugger',
     },
     {
       value: 'HtmlContent',
@@ -78,7 +77,7 @@
       return;
     }
 
-    const widget: Panel = createPanel(type, { rows, columns });
+    const widget: Panel = createPanel(type, { rows, columns, settings });
 
     if (!widget) {
       return;
@@ -101,6 +100,10 @@
     <Select name="widgetType" label="Widget Type" {options} bind:value={type} />
     <Input name="columns" label="Columns" bind:value={columns} />
     <Input name="rows" label="Rows" bind:value={rows} />
+
+    {#if type === 'HtmlContent'}
+      <HtmlContentSettings bind:data={settings} />
+    {/if}
   </Form>
 </Modal>
 
