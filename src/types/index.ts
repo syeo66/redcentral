@@ -2,7 +2,6 @@ export interface BasePanel {
   uuid: string;
   size: { columns: number; rows: number };
   position: number;
-  settings: Record<string, string>;
 }
 
 export interface BitcoinPricePanel extends BasePanel {
@@ -11,6 +10,7 @@ export interface BitcoinPricePanel extends BasePanel {
 
 export interface HtmlContentPanel extends BasePanel {
   component: 'HtmlContent';
+  settings: { content: string };
 }
 
 export interface CryptoChartsPanel extends BasePanel {
@@ -21,7 +21,7 @@ export interface ImageViewerPanel extends BasePanel {
   component: 'ImageViewer';
 }
 
-export type PanelType<T> = T extends 'BitcoinPrice'
+export type PanelType<T extends WidgetType> = T extends 'BitcoinPrice'
   ? BitcoinPricePanel
   : T extends 'HtmlContent'
   ? HtmlContentPanel

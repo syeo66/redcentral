@@ -21,7 +21,7 @@
   });
 
   let pointer = 0;
-  $: currentChart = images[pointer];
+  $: currentImage = images[pointer];
 </script>
 
 <div>
@@ -29,7 +29,7 @@
     <PrevNext max={images.length} bind:count={pointer} />
   {/if}
   {#if isLoaded[pointer]}
-    <img alt={currentChart.alt} src={currentChart.src} />
+    <img alt={currentImage.alt} src={currentImage.src} />
   {:else}
     Loading...
   {/if}

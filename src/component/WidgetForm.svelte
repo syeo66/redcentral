@@ -1,26 +1,36 @@
 <script lang="ts" context="module">
   interface CreatePanelData {
-    columns?: number;
-    rows?: number;
-    settings?: Record<string, string>;
+    columns: number;
+    rows: number;
+    settings: Record<string, string>;
   }
 
-  const createPanel = <TData extends CreatePanelData>(
-    type: WidgetType,
-    { rows = 1, columns = 1, settings }: TData = {} as TData
-  ): Panel => {
+  const createPanel = <TWidgetType extends WidgetType>(
+    type: TWidgetType,
+    data: CreatePanelData
+  ): PanelType<WidgetType> => {
     const uuid = uuidv4();
 
-    return {
-      component: type,
+    const { columns = 1, rows = 1 } = data;
+    const baseObject = {
       uuid,
       size: {
         columns,
         rows,
       },
       position: 0,
-      settings,
     };
+
+    switch (type) {
+      case 'HtmlContent':
+        return {
+          ...baseObject,
+          component: type,
+          settings: { content: data.settings.content },
+        };
+    }
+
+    return { ...baseObject, component: type };
   };
 </script>
 
@@ -77,7 +87,7 @@
       return;
     }
 
-    const widget: Panel = createPanel(type, { rows, columns, settings });
+    const widget: PanelType<typeof type> = createPanel(type, { rows, columns, settings });
 
     if (!widget) {
       return;
