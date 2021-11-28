@@ -1,16 +1,13 @@
 <script lang="ts">
   import { onMount } from 'svelte';
+  import type { ImageViewerPanel, Image } from '../../types';
 
   import PrevNext from '../PrevNext.svelte';
 
-  interface Image {
-    alt: string;
-    src: string;
-  }
+  export let panel: ImageViewerPanel;
 
-  export let images: Image[] = [];
-
-  let isLoaded: boolean[] = images.map(() => false);
+  $: images = panel?.settings?.images;
+  $: isLoaded = images?.map(() => false);
 
   onMount(async () => {
     images.forEach((image, key) => {
@@ -21,14 +18,14 @@
   });
 
   let pointer = 0;
-  $: currentImage = images[pointer];
+  $: currentImage = images?.[pointer];
 </script>
 
 <div>
-  {#if images.length > 1}
+  {#if images?.length > 1}
     <PrevNext max={images.length} bind:count={pointer} />
   {/if}
-  {#if isLoaded[pointer]}
+  {#if currentImage && isLoaded[pointer]}
     <img alt={currentImage.alt} src={currentImage.src} />
   {:else}
     Loading...

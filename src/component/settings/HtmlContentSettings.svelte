@@ -1,5 +1,5 @@
 <script lang="ts">
-  export let data: Record<string, string> = { content: '' };
+  export let data: Record<string, unknown> = { content: '' };
 
   let value: string;
 

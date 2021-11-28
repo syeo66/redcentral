@@ -17,8 +17,13 @@ export interface CryptoChartsPanel extends BasePanel {
   component: 'CryptoCharts';
 }
 
+export interface Image {
+  alt: string;
+  src: string;
+}
 export interface ImageViewerPanel extends BasePanel {
   component: 'ImageViewer';
+  settings: { images: Image[] };
 }
 
 export type PanelType<T extends WidgetType> = T extends 'BitcoinPrice'

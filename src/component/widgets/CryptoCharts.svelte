@@ -1,5 +1,8 @@
 <script lang="ts">
+  import type { CryptoChartsPanel, ImageViewerPanel } from '../../types';
   import ImageViewer from './ImageViewer.svelte';
+
+  export let panel: CryptoChartsPanel;
 
   const charts = [
     {
@@ -27,6 +30,8 @@
       src: 'https://docs.google.com/spreadsheets/d/1jN_0OLf-JZVxt2FviSIhclCdvRhgZWJFM5lGpVJ7pew/embed/oimg?id=1jN_0OLf-JZVxt2FviSIhclCdvRhgZWJFM5lGpVJ7pew&oid=210156340&disposition=ATTACHMENT&bo=false&filetype=png&zx=7ona6bqrjizl',
     },
   ];
+
+  $: imagePanel = { ...panel, settings: { images: charts }, component: 'ImageViewer' } as ImageViewerPanel;
 </script>
 
-<ImageViewer images={charts} />
+<ImageViewer panel={imagePanel} />

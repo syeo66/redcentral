@@ -2,7 +2,7 @@
   interface CreatePanelData {
     columns: number;
     rows: number;
-    settings: Record<string, string>;
+    settings?: Record<string, unknown>;
   }
 
   const createPanel = <TWidgetType extends WidgetType>(
@@ -11,7 +11,7 @@
   ): PanelType<WidgetType> => {
     const uuid = uuidv4();
 
-    const { columns = 1, rows = 1 } = data;
+    const { columns = 1, rows = 1, settings } = data;
     const baseObject = {
       uuid,
       size: {
@@ -26,7 +26,14 @@
         return {
           ...baseObject,
           component: type,
-          settings: { content: data.settings.content },
+          settings: settings as HtmlContentPanel['settings'],
+        };
+
+      case 'ImageViewer':
+        return {
+          ...baseObject,
+          component: type,
+          settings: settings as ImageViewerPanel['settings'],
         };
     }
 
@@ -42,7 +49,7 @@
   import type { User } from '@firebase/auth';
 
   import type { Option } from './Dropdown.svelte';
-  import type { Panel, WidgetType, Dashboard, PanelType } from '../types';
+  import type { WidgetType, Dashboard, PanelType, HtmlContentPanel, ImageViewerPanel } from '../types';
 
   import Form from './Form.svelte';
   import Input from './Input.svelte';
@@ -50,6 +57,7 @@
   import Select from './Select.svelte';
 
   import HtmlContentSettings from './settings/HtmlContentSettings.svelte';
+  import ImageViewerSettings from './settings/ImageViewerSettings.svelte';
 
   import { db } from '../firebase';
 
@@ -60,8 +68,8 @@
 
   let columns = 1;
   let rows = 1;
-  let settings = {};
-  let type: WidgetType | '' = '';
+  let type: WidgetType;
+  let settings: Record<string, unknown>;
 
   let options: Option[] = [
     {
@@ -113,6 +121,10 @@
 
     {#if type === 'HtmlContent'}
       <HtmlContentSettings bind:data={settings} />
+    {/if}
+
+    {#if type === 'ImageViewer'}
+      <ImageViewerSettings bind:data={settings} />
     {/if}
   </Form>
 </Modal>

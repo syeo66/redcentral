@@ -5,6 +5,7 @@
   import CryptoCharts from './widgets/CryptoCharts.svelte';
   import Debugger from './widgets/Debugger.svelte';
   import HtmlContent from './widgets/HtmlContent.svelte';
+  import ImageViewer from './widgets/ImageViewer.svelte';
 
   import type { Panel } from '../types';
 
@@ -52,11 +53,13 @@
   bind:this={component}
 >
   {#if panel.component === 'CryptoCharts'}
-    <CryptoCharts />
+    <CryptoCharts {panel} />
   {:else if panel.component === 'HtmlContent'}
     <HtmlContent {panel} />
   {:else if panel.component === 'BitcoinPrice'}
     <BitcoinPrice />
+  {:else if panel.component === 'ImageViewer'}
+    <ImageViewer {panel} />
   {:else}
     <Debugger {panel} />
   {/if}
