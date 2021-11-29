@@ -14,6 +14,9 @@
       const img = new Image();
       img.onload = () => (isLoaded[key] = true);
       img.src = image.src;
+      if (img.complete) {
+        isLoaded[key] = true;
+      }
     });
   });
 
