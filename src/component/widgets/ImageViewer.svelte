@@ -1,11 +1,11 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import type { ImageViewerPanel, Image } from '../../types';
+
+  import type { ImageViewerPanel } from '../../types';
 
   import PrevNext from '../PrevNext.svelte';
 
   export let panel: ImageViewerPanel;
-
   $: images = panel?.settings?.images;
   $: isLoaded = images?.map(() => false);
 
@@ -28,7 +28,7 @@
   {#if images?.length > 1}
     <PrevNext max={images.length} bind:count={pointer} />
   {/if}
-  {#if currentImage && isLoaded[pointer]}
+  {#if currentImage}
     <img alt={currentImage.alt} src={currentImage.src} />
   {:else}
     Loading...
