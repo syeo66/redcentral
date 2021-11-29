@@ -6,6 +6,7 @@
   import Debugger from './widgets/Debugger.svelte';
   import HtmlContent from './widgets/HtmlContent.svelte';
   import ImageViewer from './widgets/ImageViewer.svelte';
+  import NasaImages from './widgets/NasaImages.svelte';
 
   import type { Panel } from '../types';
 
@@ -56,6 +57,8 @@
     <CryptoCharts {panel} />
   {:else if panel.component === 'HtmlContent'}
     <HtmlContent {panel} />
+  {:else if panel.component === 'NasaImages'}
+    <NasaImages {panel} />
   {:else if panel.component === 'BitcoinPrice'}
     <BitcoinPrice />
   {:else if panel.component === 'ImageViewer'}

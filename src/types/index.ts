@@ -17,6 +17,10 @@ export interface CryptoChartsPanel extends BasePanel {
   component: 'CryptoCharts';
 }
 
+export interface NasaImagesPanel extends BasePanel {
+  component: 'NasaImages';
+}
+
 export interface Image {
   alt: string;
   src: string;
@@ -34,8 +38,10 @@ export type PanelType<T extends WidgetType> = T extends 'BitcoinPrice'
   ? CryptoChartsPanel
   : T extends 'ImageViewer'
   ? ImageViewerPanel
+  : T extends 'NasaImages'
+  ? NasaImagesPanel
   : never;
-export type Panel = BitcoinPricePanel | HtmlContentPanel | CryptoChartsPanel | ImageViewerPanel;
+export type Panel = BitcoinPricePanel | HtmlContentPanel | CryptoChartsPanel | ImageViewerPanel | NasaImagesPanel;
 export type WidgetType = Panel['component'];
 
 export interface Dashboard {

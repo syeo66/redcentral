@@ -85,6 +85,10 @@
       label: 'HTML Content',
     },
     {
+      value: 'NasaImages',
+      label: 'Nasa Images',
+    },
+    {
       value: 'ImageViewer',
       label: 'Image Viewer',
     },
