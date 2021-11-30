@@ -2,7 +2,7 @@
   import { QueryClient, QueryClientProvider } from '@sveltestack/svelte-query';
   import { Router, Route } from 'svelte-routing';
   import { onSnapshot, collection, QuerySnapshot, Unsubscribe } from 'firebase/firestore';
-  import { onDestroy } from 'svelte';
+  import { onDestroy, setContext } from 'svelte';
   import type { User } from 'firebase/auth';
 
   import Header from './component/Header.svelte';
@@ -12,12 +12,14 @@
   import Tools from './component/Tools.svelte';
 
   import { auth, db } from './firebase';
-  import type { Dashboard } from './types';
+  import type { Dashboard, UserContext } from './types';
 
   let user: User;
   let firstId = '';
   let isEditMode = false;
   let unsub: Unsubscribe;
+
+  setContext<UserContext>('user', { getUser: () => user });
 
   auth.onAuthStateChanged((u) => {
     user = u;
@@ -68,13 +70,13 @@
         <Tools on:editmode={handleEditMode} />
 
         <Route path="/:id" let:params>
-          <Navigation {user} id={params.id} {dashboards} {isEditMode} />
-          <Main id={params.id} {dashboards} {isEditMode} {user} />
+          <Navigation id={params.id} {dashboards} {isEditMode} />
+          <Main id={params.id} {dashboards} {isEditMode} />
         </Route>
 
         <Route path="/">
-          <Navigation {user} id={firstId} {dashboards} {isEditMode} />
-          <Main id={firstId} {dashboards} {isEditMode} {user} />
+          <Navigation id={firstId} {dashboards} {isEditMode} />
+          <Main id={firstId} {dashboards} {isEditMode} />
         </Route>
       {/if}
     </section>

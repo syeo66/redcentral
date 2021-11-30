@@ -1,3 +1,5 @@
+import type { User } from '@firebase/auth';
+
 export interface BasePanel {
   uuid: string;
   size: { columns: number; rows: number };
@@ -53,4 +55,8 @@ export interface Dashboard {
 
 export interface DashboardUser {
   dashboards: Dashboard[];
+}
+
+export interface UserContext {
+  getUser: () => User;
 }

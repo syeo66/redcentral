@@ -42,14 +42,13 @@
 </script>
 
 <script lang="ts">
-  import { createEventDispatcher } from 'svelte';
+  import { createEventDispatcher, getContext } from 'svelte';
   import { v4 as uuidv4 } from 'uuid';
 
   import { doc, updateDoc, arrayUnion } from '@firebase/firestore';
-  import type { User } from '@firebase/auth';
 
   import type { Option } from './Dropdown.svelte';
-  import type { WidgetType, Dashboard, PanelType, HtmlContentPanel, ImageViewerPanel } from '../types';
+  import type { WidgetType, Dashboard, PanelType, HtmlContentPanel, ImageViewerPanel, UserContext } from '../types';
 
   import Form from './Form.svelte';
   import Input from './Input.svelte';
@@ -61,10 +60,11 @@
 
   import { db } from '../firebase';
 
-  export let user: User;
   export let dashboard: Dashboard;
 
   const dispatch = createEventDispatcher();
+
+  const { getUser } = getContext<UserContext>('user');
 
   let columns = 1;
   let rows = 1;
@@ -95,6 +95,8 @@
   ];
 
   const handleConfirm = async () => {
+    const user = getUser();
+
     if (!user || !type || !dashboard) {
       return;
     }

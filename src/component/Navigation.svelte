@@ -1,6 +1,7 @@
 <script lang="ts">
   import { link } from 'svelte-routing';
-  import { signOut, User } from 'firebase/auth';
+  import { getContext } from 'svelte';
+  import { signOut } from 'firebase/auth';
 
   import Icon from 'svelte-awesome';
   import { signOut as signOutIcon, globe, lock, cog, plusCircle } from 'svelte-awesome/icons';
@@ -13,8 +14,8 @@
   export let dashboards: Record<string, Dashboard> = {};
   export let id = '';
   export let isEditMode = false;
-  export let user: User;
 
+  const { getUser } = getContext('user');
   const emptyDashboard: Dashboard = { uuid: '', name: '', public: false, panels: [] };
 
   let showConfiguration = false;
@@ -47,7 +48,7 @@
 </script>
 
 <nav>
-  {#if user}
+  {#if getUser()}
     {#if dashboards}
       {#each Object.entries(dashboards) as [key, dashboard]}
         <a href={`/${key}`} use:link class:active={id === key}>
@@ -71,7 +72,12 @@
   {/if}
 
   {#if showConfiguration}
-    <DashboardForm on:cancel={handleCancel} on:confirm={handleConfirm} dashboard={configureDashboard} {user} />
+    <DashboardForm
+      on:cancel={handleCancel}
+      on:confirm={handleConfirm}
+      dashboard={configureDashboard}
+      user={getUser()}
+    />
   {/if}
 </nav>
 
