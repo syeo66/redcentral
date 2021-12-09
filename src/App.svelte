@@ -25,6 +25,7 @@
     user = u;
 
     if (!user) {
+      unsub?.();
       unsub = null;
 
       return;
@@ -54,7 +55,7 @@
 
   const handleEditMode = (e: CustomEvent<boolean>) => (isEditMode = e.detail);
 
-  onDestroy(() => unsub && unsub());
+  onDestroy(() => unsub?.());
 </script>
 
 <QueryClientProvider client={queryClient}>
