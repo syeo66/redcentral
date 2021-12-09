@@ -16,7 +16,7 @@
   export let isEditMode = false;
 
   const { getUser } = getContext('user');
-  const emptyDashboard: Dashboard = { uuid: '', name: '', public: false, panels: [] };
+  const emptyDashboard: Dashboard = { uuid: '', name: '', public: false, panels: [], position: 1 };
 
   let showConfiguration = false;
   let configureDashboard: Dashboard = { ...emptyDashboard };
@@ -45,13 +45,15 @@
     configureDashboard = { ...emptyDashboard };
     showConfiguration = true;
   };
+
+  $: sortedDashboards = dashboards && Object.values(dashboards).sort((a, b) => a.position - b.position);
 </script>
 
 <nav>
   {#if getUser()}
     {#if dashboards}
-      {#each Object.entries(dashboards) as [key, dashboard]}
-        <a href={`/${key}`} use:link class:active={id === key}>
+      {#each sortedDashboards as dashboard}
+        <a href={`/${dashboard.uuid}`} use:link class:active={id === dashboard.uuid}>
           <Icon data={dashboard.public ? globe : lock} />&nbsp;{dashboard.name}
           {#if isEditMode}
             <div class="icon" on:click={handleDashboardEditClick(dashboard)}><Icon data={cog} /></div>
@@ -73,9 +75,9 @@
 
   {#if showConfiguration}
     <DashboardForm
+      dashboard={configureDashboard}
       on:cancel={handleCancel}
       on:confirm={handleConfirm}
-      dashboard={configureDashboard}
       user={getUser()}
     />
   {/if}

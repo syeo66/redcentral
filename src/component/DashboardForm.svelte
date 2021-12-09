@@ -13,7 +13,7 @@
   import type { Dashboard } from '../types';
 
   export let user: User;
-  export let dashboard: Dashboard = { uuid: '', name: '', public: false, panels: [] };
+  export let dashboard: Dashboard = { uuid: '', name: '', public: false, panels: [], position: 1 };
 
   const dispatch = createEventDispatcher();
 
@@ -35,6 +35,7 @@
   <Form on:cancel={handleCancel} on:confirm={handleConfirm}>
     <h2>Dashboard</h2>
     <Input label="Name" name="name" bind:value={dashboard.name} />
+    <Input label="Position" name="position" bind:value={dashboard.position} />
     <Checkbox label="Is public" name="public" bind:value={dashboard.public} />
   </Form>
 </Modal>

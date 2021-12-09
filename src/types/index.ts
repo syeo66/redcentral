@@ -49,6 +49,7 @@ export type WidgetType = Panel['component'];
 export interface Dashboard {
   uuid: string;
   name: string;
+  position: number;
   public?: boolean;
   panels: Panel[];
 }

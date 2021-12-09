@@ -35,14 +35,13 @@
       (results: QuerySnapshot<Dashboard>) => {
         firstId = '';
 
-        const newDashboards = {};
+        const newDashboards: Record<string, Dashboard> = {};
 
         results.forEach((entry) => {
-          if (!firstId) {
-            firstId = entry.id;
-          }
           newDashboards[entry.id] = entry.data();
         });
+
+        firstId = Object.values(newDashboards).sort((a, b) => a.position - b.position)?.[0].uuid || '';
 
         dashboards = newDashboards;
       }
