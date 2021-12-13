@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { editMode } from '../stores';
+  import { isEditMode } from '../stores';
 
   import type { Dashboard } from '../types';
 
@@ -8,17 +8,11 @@
   export let id = '';
   export let dashboards: Record<string, Dashboard>;
 
-  let isEditMode = false;
-
-  editMode.subscribe((value) => {
-    isEditMode = value;
-  });
-
   $: currentDashboard = dashboards[id];
 </script>
 
 <main>
-  <WidgetGrid dashboard={currentDashboard} {isEditMode} />
+  <WidgetGrid dashboard={currentDashboard} isEditMode={$isEditMode} />
 </main>
 
 <style lang="scss">

@@ -1,21 +1,16 @@
 <script lang="ts">
   import Icon from 'svelte-awesome';
   import { cog } from 'svelte-awesome/icons';
-  import { createEventDispatcher } from 'svelte';
-
-  let isEditMode: boolean = false;
-
-  const dispatch = createEventDispatcher<{ editmode: boolean }>();
+  import { isEditMode } from '../stores';
 
   const handleEditModeClick = () => {
-    isEditMode = !isEditMode;
-    dispatch('editmode', isEditMode);
+    isEditMode.set(!$isEditMode);
   };
 </script>
 
 <div class="tools">
-  <span on:click={handleEditModeClick} title={isEditMode ? 'End edit mode' : 'Start edit mode'}>
-    <Icon spin={isEditMode} data={cog} scale={1.7} style="cursor:pointer;" />
+  <span on:click={handleEditModeClick} title={$isEditMode ? 'End edit mode' : 'Start edit mode'}>
+    <Icon spin={$isEditMode} data={cog} scale={1.7} style="cursor:pointer;" />
   </span>
 </div>
 

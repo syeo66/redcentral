@@ -12,7 +12,6 @@
   import Tools from './component/Tools.svelte';
 
   import { auth, db } from './firebase';
-  import { editMode } from './stores';
   import type { Dashboard, UserContext } from './types';
 
   let user: User;
@@ -53,8 +52,6 @@
 
   let dashboards: Record<string, Dashboard> = {};
 
-  const handleEditMode = (e: CustomEvent<boolean>) => editMode.set(e.detail);
-
   onDestroy(() => unsub?.());
 </script>
 
@@ -67,7 +64,7 @@
         <div class="tools" />
         <Login />
       {:else}
-        <Tools on:editmode={handleEditMode} />
+        <Tools />
 
         <Route path="/:id" let:params>
           <Navigation id={params.id} {dashboards} />

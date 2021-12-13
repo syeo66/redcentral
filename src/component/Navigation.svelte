@@ -9,17 +9,11 @@
   import Button from './Button.svelte';
   import DashboardForm from './DashboardForm.svelte';
   import { auth } from '../firebase';
-  import { editMode } from '../stores';
+  import { isEditMode } from '../stores';
   import type { Dashboard } from '../types';
 
   export let dashboards: Record<string, Dashboard> = {};
   export let id = '';
-
-  let isEditMode = false;
-
-  editMode.subscribe((value) => {
-    isEditMode = value;
-  });
 
   const { getUser } = getContext('user');
   const emptyDashboard: Dashboard = { uuid: '', name: '', public: false, panels: [], position: 1 };
@@ -61,14 +55,14 @@
       {#each sortedDashboards as dashboard}
         <a href={`/${dashboard.uuid}`} use:link class:active={id === dashboard.uuid}>
           <Icon data={dashboard.public ? globe : lock} />&nbsp;{dashboard.name}
-          {#if isEditMode}
+          {#if $isEditMode}
             <div class="icon" on:click={handleDashboardEditClick(dashboard)}><Icon data={cog} /></div>
           {/if}
         </a>
       {/each}
     {/if}
 
-    {#if isEditMode}
+    {#if $isEditMode}
       <div class="add-dashboard">
         <span on:click={handleDashboardAddClick}><Icon data={plusCircle} scale={2} /></span>
       </div>
