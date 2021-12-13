@@ -9,11 +9,17 @@
   import Button from './Button.svelte';
   import DashboardForm from './DashboardForm.svelte';
   import { auth } from '../firebase';
+  import { editMode } from '../stores';
   import type { Dashboard } from '../types';
 
   export let dashboards: Record<string, Dashboard> = {};
   export let id = '';
-  export let isEditMode = false;
+
+  let isEditMode = false;
+
+  editMode.subscribe((value) => {
+    isEditMode = value;
+  });
 
   const { getUser } = getContext('user');
   const emptyDashboard: Dashboard = { uuid: '', name: '', public: false, panels: [], position: 1 };

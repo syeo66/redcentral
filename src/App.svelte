@@ -12,11 +12,11 @@
   import Tools from './component/Tools.svelte';
 
   import { auth, db } from './firebase';
+  import { editMode } from './stores';
   import type { Dashboard, UserContext } from './types';
 
   let user: User;
   let firstId = '';
-  let isEditMode = false;
   let unsub: Unsubscribe;
 
   setContext<UserContext>('user', { getUser: () => user });
@@ -53,7 +53,7 @@
 
   let dashboards: Record<string, Dashboard> = {};
 
-  const handleEditMode = (e: CustomEvent<boolean>) => (isEditMode = e.detail);
+  const handleEditMode = (e: CustomEvent<boolean>) => editMode.set(e.detail);
 
   onDestroy(() => unsub?.());
 </script>
@@ -70,13 +70,13 @@
         <Tools on:editmode={handleEditMode} />
 
         <Route path="/:id" let:params>
-          <Navigation id={params.id} {dashboards} {isEditMode} />
-          <Main id={params.id} {dashboards} {isEditMode} />
+          <Navigation id={params.id} {dashboards} />
+          <Main id={params.id} {dashboards} />
         </Route>
 
         <Route path="/">
-          <Navigation id={firstId} {dashboards} {isEditMode} />
-          <Main id={firstId} {dashboards} {isEditMode} />
+          <Navigation id={firstId} {dashboards} />
+          <Main id={firstId} {dashboards} />
         </Route>
       {/if}
     </section>

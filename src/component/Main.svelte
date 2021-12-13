@@ -1,11 +1,18 @@
 <script lang="ts">
+  import { editMode } from '../stores';
+
   import type { Dashboard } from '../types';
 
   import WidgetGrid from './WidgetGrid.svelte';
 
   export let id = '';
-  export let isEditMode = false;
   export let dashboards: Record<string, Dashboard>;
+
+  let isEditMode = false;
+
+  editMode.subscribe((value) => {
+    isEditMode = value;
+  });
 
   $: currentDashboard = dashboards[id];
 </script>
