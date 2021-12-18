@@ -115,11 +115,10 @@
 
     dispatch('confirm');
   };
-  const handleCancel = () => dispatch('cancel');
 </script>
 
 <Modal>
-  <Form on:cancel={handleCancel} on:confirm={handleConfirm}>
+  <Form on:cancel on:confirm={handleConfirm}>
     <h2>Widget</h2>
     <Select name="widgetType" label="Widget Type" {options} bind:value={type} />
     <Input name="columns" label="Columns" bind:value={columns} />

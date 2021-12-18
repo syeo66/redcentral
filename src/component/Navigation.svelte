@@ -33,10 +33,7 @@
     signOut(auth);
   };
 
-  const handleDashboardEditClick = (dashboard: Dashboard) => (e: MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-
+  const handleDashboardEditClick = (dashboard: Dashboard) => () => {
     configureDashboard = { ...dashboard };
     showConfiguration = true;
   };
@@ -56,7 +53,9 @@
         <a href={`/${dashboard.uuid}`} use:link class:active={id === dashboard.uuid}>
           <Icon data={dashboard.public ? globe : lock} />&nbsp;{dashboard.name}
           {#if $isEditMode}
-            <div class="icon" on:click={handleDashboardEditClick(dashboard)}><Icon data={cog} /></div>
+            <div class="icon" on:click|preventDefault|stopPropagation={handleDashboardEditClick(dashboard)}>
+              <Icon data={cog} />
+            </div>
           {/if}
         </a>
       {/each}

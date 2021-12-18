@@ -1,15 +1,9 @@
 <script lang="ts">
-  import { createEventDispatcher } from 'svelte';
-
   export let style = '';
   export let isPrimary = false;
-
-  const dispatch = createEventDispatcher();
-
-  const handleClick = () => dispatch('click');
 </script>
 
-<button on:click={handleClick} class:primary={isPrimary} {style}>
+<button class:primary={isPrimary} {style} on:click>
   <slot />
 </button>
 

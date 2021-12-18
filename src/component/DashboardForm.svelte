@@ -27,12 +27,10 @@
 
     dispatch('confirm');
   };
-
-  const handleCancel = () => dispatch('cancel');
 </script>
 
 <Modal>
-  <Form on:cancel={handleCancel} on:confirm={handleConfirm}>
+  <Form on:cancel on:confirm={handleConfirm}>
     <h2>Dashboard</h2>
     <Input label="Name" name="name" bind:value={dashboard.name} />
     <Input label="Position" name="position" bind:value={dashboard.position} />

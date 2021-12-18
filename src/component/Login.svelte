@@ -8,9 +8,9 @@
 
   let error;
 
-  const handleLogin = async () => {
+  const handleLogin = () => {
     try {
-      await signInWithPopup(auth, provider);
+      signInWithPopup(auth, provider);
     } catch (err) {
       error = err;
     }
