@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { fly } from 'svelte/transition';
+  import { fly, fade } from 'svelte/transition';
 </script>
 
-<div class="modal">
+<div transition:fade={{ duration: 200 }} class="modal">
   <div transition:fly={{ duration: 200, y: 500 }} class="window">
     <slot />
   </div>
