@@ -1,5 +1,6 @@
 <script lang="ts">
-  import Dropdown, { Option } from './Dropdown.svelte';
+  import Dropdown from './Dropdown.svelte';
+  import type { Option } from './Dropdown.svelte';
 
   export let options: Option[] = [];
   export let name: string;

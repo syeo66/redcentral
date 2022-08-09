@@ -1,9 +1,10 @@
 <script lang="ts">
+  import type { Unsubscribe } from 'firebase/firestore';
+  import type { User } from 'firebase/auth';
   import { QueryClient, QueryClientProvider } from '@sveltestack/svelte-query';
   import { Router, Route } from 'svelte-routing';
-  import { onSnapshot, collection, QuerySnapshot, Unsubscribe } from 'firebase/firestore';
   import { onDestroy, setContext } from 'svelte';
-  import type { User } from 'firebase/auth';
+  import { onSnapshot, collection, QuerySnapshot } from 'firebase/firestore';
 
   import Header from './component/Header.svelte';
   import Login from './component/Login.svelte';
