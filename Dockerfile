@@ -16,4 +16,5 @@ FROM nginx as server
 EXPOSE 80
 
 COPY --from=node /usr/src/app/public /usr/share/nginx/html
-COPY ./nginx.conf /etc/nginx/nginx.conf
+COPY --from=node /usr/src/app/nginx.conf /etc/nginx/nginx.conf
+
